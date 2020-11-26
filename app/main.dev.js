@@ -463,6 +463,20 @@ app.on('ready', async () => {
     mainWindow = null;
   });
 
+  const keyCodes = {
+    V: 86,
+  }
+
+  if (platform === "darwin") {
+    document.onkeydown = function(event){
+      if(!event.metaKey) return true; // cmd
+      if(!event.which == 86) return true; // V
+      document.activeElement.value += clipboard.readText()
+      document.activeElement.dispatchEvent(new Event('input'))
+      return false;
+    }
+  }
+
   const menuBuilder = new MenuBuilder(mainWindow);
   menuBuilder.buildMenu();
 });
